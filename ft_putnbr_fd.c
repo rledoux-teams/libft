@@ -1,54 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   putnbr_fd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 17:22:14 by rledoux           #+#    #+#             */
-/*   Updated: 2022/04/04 16:42:42 by rledoux          ###   ########.fr       */
+/*   Created: 2022/04/06 18:48:16 by rledoux           #+#    #+#             */
+/*   Updated: 2022/04/06 18:51:29 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 
-static void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t	i;
-	char	*res;
-
-	i = 0;
-	res = s;
-	while (i < n)
-	{
-		*(res + i) = c;
-		i++;
-	}
-	return (s);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*ptr;
-
-	if (nmemb == 0 || size == 0)
-		return (NULL);
-	if ((nmemb * size) > 2147483647)
-		return (NULL);
-	ptr = malloc(nmemb * size);
-	ft_memset(ptr, 0, size);
-	return (ptr);
-}
-
-int	intlen(int n)
+int	intlen(long int n)
 {
 	int	len;
 
 	len = 0;
 	if (n == 0)
-		return (2);
+		return (1);
 	if (n > 0)
 	{
 		while (n >= 1)
@@ -72,7 +44,17 @@ int	intlen(int n)
 
 char	*malloc_res(char *res, int len)
 {
-	res = ft_calloc(len + 1, sizeof(char));
+	int	i;
+
+	if (((len + 1) * sizeof(char)) > 2147483647)
+		return (NULL);
+	res = malloc((len + 1) * sizeof(char));
+	i = 0;
+	while (i < len + 1)
+	{
+		*(res + i) = '\0';
+		i++;
+	}
 	if (res == NULL)
 		return (NULL);
 	return (res);
@@ -80,7 +62,7 @@ char	*malloc_res(char *res, int len)
 
 int	is_negative(int n)
 {
-	if (n < 0 || n == -2147483648)
+	if (n < 0)
 		return (1);
 	else
 		return (0);
@@ -88,32 +70,42 @@ int	is_negative(int n)
 
 char	*ft_itoa(int n)
 {
-	char	*res;
-	int		bool_negative;
-	int		len;
+	char		*res;
+	int			bool_negative;
+	int			len;
+	long int	n2;
 
-	len = intlen(n) - 1;
-	bool_negative = is_negative(n);
+	n2 = n;
+	len = intlen(n2) - 1;
+	bool_negative = is_negative(n2);
 	res = malloc(0);
 	res = malloc_res(res, len + 1);
-	if (n < 0 && n != -2147483648)
-        n = n * -1;
-    else if (n == -2147483648)
+	if (n < 0)
+		n2 = n2 * -1;
+	while (n2 >= 1 || (len == 0 && !bool_negative))
 	{
-		res[len] = '8';
-		n = 214748364;
-		len--;
-	}
-	while (len >= 0)
-	{
-		res[len] = (n % 10) + '0';
-		if (n == 10)
-			n = 1;
+		res[len] = (n2 % 10) + '0';
+		if (n2 == 10)
+			n2 = 1;
 		else
-			n = n / 10;
+			n2 = n2 / 10;
 		len--;
 	}
 	if (bool_negative)
 		res[len] = '-';
 	return (res);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	int		i;
+	char	*s;
+
+	s = ft_itoa(n);
+	i = 0;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }
