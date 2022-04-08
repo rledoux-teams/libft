@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putnbr_fd.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 18:48:16 by rledoux           #+#    #+#             */
-/*   Updated: 2022/04/06 18:51:29 by rledoux          ###   ########.fr       */
+/*   Updated: 2022/04/08 13:23:03 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-int	intlen(long int n)
+static int	intlen(long int n)
 {
 	int	len;
 
@@ -42,7 +42,7 @@ int	intlen(long int n)
 		return (11);
 }
 
-char	*malloc_res(char *res, int len)
+static char	*malloc_res(char *res, int len)
 {
 	int	i;
 
@@ -60,7 +60,7 @@ char	*malloc_res(char *res, int len)
 	return (res);
 }
 
-int	is_negative(int n)
+static int	is_negative(int n)
 {
 	if (n < 0)
 		return (1);
@@ -68,7 +68,7 @@ int	is_negative(int n)
 		return (0);
 }
 
-char	*ft_itoa(int n)
+static char	*ft_itoa(int n)
 {
 	char		*res;
 	int			bool_negative;

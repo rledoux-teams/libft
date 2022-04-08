@@ -6,7 +6,7 @@
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 14:54:00 by rledoux           #+#    #+#             */
-/*   Updated: 2022/03/30 15:03:34 by rledoux          ###   ########.fr       */
+/*   Updated: 2022/04/08 14:47:41 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	if ((nmemb * size) > 2147483647)
 		return (NULL);
 	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
 	ft_memset(ptr, 0, size);
 	return (ptr);
 }

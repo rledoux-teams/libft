@@ -6,7 +6,7 @@
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 16:29:16 by rledoux           #+#    #+#             */
-/*   Updated: 2022/03/30 16:41:12 by rledoux          ###   ########.fr       */
+/*   Updated: 2022/04/08 13:15:43 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*res;
 	size_t	i;
 
+	i = 0;
 	res = malloc(len);
 	while (i < len)
 	{

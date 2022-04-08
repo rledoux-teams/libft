@@ -6,7 +6,7 @@
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 14:02:13 by rledoux           #+#    #+#             */
-/*   Updated: 2022/03/31 18:01:37 by rledoux          ###   ########.fr       */
+/*   Updated: 2022/04/08 13:17:09 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ size_t	word_count(const char *s, char c)
 	int		index;
 	
 	size = 0;
+	index = 0;
 	while (s[index] != '\0')
 	{
 		while (s[index] == c && s[index] != '\0')
@@ -38,7 +39,7 @@ size_t	word_count(const char *s, char c)
 			index++;
 		size++;
 	}
-	//printf("Word count = %ld\n", size);
+	printf("Word count = %ld\n", size);
 	return (size);
 }
 
@@ -52,6 +53,7 @@ char	**ft_split(char const *s, char c)
 	res = malloc(word_count(s, c) * sizeof(char *));
 	//printf("Malloc réussi, taille de %ld\n", word_count(s, c));
 	res[j] = malloc(ft_strlen(s, c));
+	printf("Malloc réussi, taille de %ld char '%c'\n", ft_strlen(s, c), *s);
 	if (res[j] == NULL)
 		return (NULL);
 	i = 0;
@@ -64,13 +66,13 @@ char	**ft_split(char const *s, char c)
 			res[j][i] = '\0';
 			i = 0;
 			s++;
-			//printf("res = '%s'\n", res[j]);
+			printf("res = '%s'\n", res[j]);
 			j++;
 			while (*s == c && *s != '\0')
 				s++;
 			if (*s == '\0')
 			{
-				printf("Fin split 2\n");
+				//printf("Fin split 2\n");
 				return (res);
 			}
 			res[j] = malloc(ft_strlen(s, c));

@@ -6,13 +6,13 @@
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 15:34:13 by rledoux           #+#    #+#             */
-/*   Updated: 2022/03/29 16:03:35 by rledoux          ###   ########.fr       */
+/*   Updated: 2022/04/08 13:20:04 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 
-size_t	ft_strlen(const char *s)
+static size_t	ft_strlen(const char *s)
 {
 	int	i;
 

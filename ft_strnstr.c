@@ -6,7 +6,7 @@
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 18:13:40 by rledoux           #+#    #+#             */
-/*   Updated: 2022/03/29 19:15:51 by rledoux          ###   ########.fr       */
+/*   Updated: 2022/04/08 13:14:51 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ int	check_little(const char *big, const char *little, int i, int check)
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int		i;
 	size_t	index;
-	int		check;
 
 	if (*little == 0)
-		return (big);
+		return ((char *)big);
 	if (len == 0)
 		return (0);
 	index = 0;
@@ -52,7 +50,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		if (little[0] == *big)
 		{
 			if (check_little(big, little, 0, 1) == 1)
-				return (big);
+				return ((char *)big);
 		}
 		index++;
 		big++;

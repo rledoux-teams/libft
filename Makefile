@@ -20,3 +20,7 @@ fclean:     clean
 			${RM} $(OBJS)
 
 re:	fclean $(NAME)
+
+so:
+	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS)
+	gcc -nostartfiles -shared -o libft.so $(OBJS)

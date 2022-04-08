@@ -6,7 +6,7 @@
 /*   By: rledoux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 16:41:52 by rledoux           #+#    #+#             */
-/*   Updated: 2022/03/30 16:49:29 by rledoux          ###   ########.fr       */
+/*   Updated: 2022/04/08 13:16:27 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static size_t	ft_strlen(const char *s)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*res;
-	int		i;
-	int		index;
+	size_t	i;
+	size_t	index;
 
 	res = malloc(ft_strlen(s1) + ft_strlen(s2));
 	i = 0;

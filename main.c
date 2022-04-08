@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jtoty <jtoty@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/28 12:19:22 by jtoty             #+#    #+#             */
-/*   Updated: 2022/04/04 16:30:22 by rledoux          ###   ########.fr       */
+/*   Created: 2017/02/28 12:34:58 by jtoty             #+#    #+#             */
+/*   Updated: 2022/04/08 11:56:32 by rledoux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,56 @@
 #include <unistd.h>
 #include "libft.h"
 
-static void		ft_print_result(char *s)
+static void			ft_print_result(char const *s)
 {
 	int		len;
 
-	if (!s)
-		write(1, "NULL", 4);
-	else
-	{
-		len = 0;
-		while (s[len])
-			len++;
-		write(1, s, len);
-		free(s);
-	}
+	len = 0;
+	while (s[len])
+		len++;
+	write(1, s, len);
 }
 
-int				main(int argc, const char *argv[])
+static void			ft_print_tabstr(char **tabstr)
+{
+	int		i;
+
+	i = 0;
+	while (tabstr[i] != NULL)
+	{
+		ft_print_result(tabstr[i]);
+		write(1, "\n", 1);
+		free(tabstr[i]);
+		i++;
+	}
+	free(tabstr);
+}
+
+static void			check_split(char *s, char c)
+{
+	char	**tabstr;
+
+	if (!(tabstr = ft_split(s, c)))
+		ft_print_result("NULL");
+	else
+		ft_print_tabstr(tabstr);
+}
+
+int					main(int argc, const char *argv[])
 {
 	int		arg;
 
-	//alarm(5);
 	if (argc == 1)
 		return (0);
-	else if ((arg = atoi(argv[1])) == 1)
-		ft_print_result(ft_itoa(0));
+	if ((arg = atoi(argv[1])) == 1)
+		check_split("          ", ' ');
 	else if (arg == 2)
-		ft_print_result(ft_itoa(9));
+		check_split("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse", ' ');
 	else if (arg == 3)
-		ft_print_result(ft_itoa(-9));
+		check_split("   lorem   ipsum dolor     sit amet, consectetur   adipiscing elit. Sed non risus. Suspendisse   ", ' ');
 	else if (arg == 4)
-		ft_print_result(ft_itoa(10));
+		check_split("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultricies diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.", 'i');
 	else if (arg == 5)
-		ft_print_result(ft_itoa(-10));
-	else if (arg == 6)
-		ft_print_result(ft_itoa(8124));
-	else if (arg == 7)
-		ft_print_result(ft_itoa(-9874));
-	else if (arg == 8)
-		ft_print_result(ft_itoa(543000));
-	else if (arg == 9)
-		ft_print_result(ft_itoa(-2147483648LL));
-	else if (arg == 10)
-		ft_print_result(ft_itoa(2147483647));
+		check_split("lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultricies diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.", 'z');
 	return (0);
 }
