@@ -13,7 +13,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+/*
 static size_t	ft_strlen(const char *s, char c)
 {
 	int	i;
@@ -23,7 +23,20 @@ static size_t	ft_strlen(const char *s, char c)
 		i++;
 	return (i + 1);
 }
+*/
 
+static void	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	while ((i < size - 1) && (*(src + i) != '\0'))
+	{
+		*(dst + i) = *(src + i);
+		i++;
+	}
+	*(dst + i) = '\0';
+}
 size_t	word_count(const char *s, char c)
 {
 	size_t	size;
@@ -39,52 +52,53 @@ size_t	word_count(const char *s, char c)
 			index++;
 		size++;
 	}
-	printf("Word count = %ld\n", size);
 	return (size);
+}
+
+void	get_next_word(char **copy_s, size_t *len, char c)
+{
+	size_t	i;
+
+	i = 0;
+	*copy_s = *copy_s + *len;
+	*len = 0;
+	while(**copy_s && **copy_s == c)
+		(*copy_s)++;
+	while ((*copy_s)[i])
+	{
+		if (((*copy_s)[i] == c))
+			break ;
+		i++;
+		(*len)++;
+	}
 }
 
 char	**ft_split(char const *s, char c)
 {
-	int		i;
-	int		j;
 	char 	**res;
+	char	*copy_s;
+	size_t	len;
+	size_t	count;
+	size_t	i;
 
-	j = 0;
-	res = malloc(word_count(s, c) * sizeof(char *));
-	//printf("Malloc réussi, taille de %ld\n", word_count(s, c));
-	res[j] = malloc(ft_strlen(s, c));
-	printf("Malloc réussi, taille de %ld char '%c'\n", ft_strlen(s, c), *s);
-	if (res[j] == NULL)
+	if (!s)
 		return (NULL);
+	count = word_count(s, c);
+	res = (char **)malloc(count * sizeof(char *));
+	if (res == NULL)
+		return (NULL);
+	copy_s = (char *)s;
+	len = 0;
 	i = 0;
-	while (*s == c && *s != '\0')
-		s++;
-	while (*s != '\0')
+	while (i < count)
 	{
-		if (*s == c)
-		{
-			res[j][i] = '\0';
-			i = 0;
-			s++;
-			printf("res = '%s'\n", res[j]);
-			j++;
-			while (*s == c && *s != '\0')
-				s++;
-			if (*s == '\0')
-			{
-				//printf("Fin split 2\n");
-				return (res);
-			}
-			res[j] = malloc(ft_strlen(s, c));
-			if (res == NULL)
-				return (NULL);
-			printf("Malloc réussi, taille de %ld char '%c'\n", ft_strlen(s, c), *s);
-		}
-		res[j][i] = *s;
+		get_next_word(&copy_s, &len, c);
+		res[i] = (char *)malloc(sizeof(char) * len + 1);
+		if (res[i] == NULL)
+			return (NULL);
+		ft_strlcpy(res[i], copy_s, len);
 		i++;
-		s++;
 	}
-	res[j][i] = '\0';
-	//res[j + 1] = 0;
+	res[i] = NULL;
 	return (res);
 }
